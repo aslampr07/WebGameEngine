@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Project Agera</title>
+        <link href="CSS/jquery-ui.min.css" rel="stylesheet">
+        <link href="CSS/layouts.css" rel="stylesheet" >
+        <script src="JS/jquery-2.2.3.min.js"></script>
+        <script src="JS/jquery-ui.min.js"></script>
+        <script src="JS/babylon.js"></script>
+        <script src="JS/editor.js"></script>
+    </head>
+    <body>
+
+        <div id="addmenu">
+            <button>Cube</button>
+            <button>Sphere</button>
+            <button>Cylinder</button>
+            <button>Torus</button>
+        </div>
+
+        <canvas id="editor">
+            No fucking canvas support, go and buy a new computer
+        </canvas>
+
+        <script>
+            $(function () {
+                $("#editor").resizable({ autoHide: true, handles: "n,e,w,s" });
+                $("#addmenu").resizable({ autoHide: true, handles: "n,e,w,s" });
+            })
+            var canvas = document.getElementById("editor");
+            var engine = new BABYLON.Engine(canvas, true);
+            var scene = new BABYLON.Scene(engine);
+            var camera = new BABYLON.ArcRotateCamera("Camera", 0, Math.PI / 2, 13, BABYLON.Vector3.Zero(), scene);
+            camera.attachControl(canvas, false);
+            var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+            var knot = BABYLON.Mesh.CreateTorusKnot("mesh", 2, 0.5, 128, 64, 2, 50, scene);
+            var renderloop = function () {
+                scene.render();
+                engine.resize();        //May not be nice way to resize the engine, but it works
+            };
+            engine.runRenderLoop(renderloop);
+        </script>
+
+    </body>
+</html>
